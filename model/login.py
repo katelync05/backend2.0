@@ -91,8 +91,9 @@ class User(db.Model):
     # update password, this is conventional method used for setter
     def set_password(self, password):
         """Create a hashed password using SHA-256."""
+        password_bytes = bytes(password, 'utf-8')
         sha256 = hashlib.sha256()
-        sha256.update(password.encode('utf-8'))
+        sha256.update(password_bytes)
         self._password = sha256.hexdigest()
 
     # check password parameter against stored/encrypted password
