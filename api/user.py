@@ -3,6 +3,7 @@ from flask import Blueprint, request, jsonify, current_app, Response
 from flask_restful import Api, Resource # used for REST API building
 from datetime import datetime
 from auth_middleware import token_required
+from jwt import encode
 
 from model.users import User
 
@@ -84,7 +85,7 @@ class UserAPI:
                     return {'message': f"Invalid user id or password"}, 400
                 if user:
                     try:
-                        token = jwt.encode(
+                        token = encode(
                             {"_uid": user._uid},
                             current_app.config["SECRET_KEY"],
                             algorithm="HS256"
